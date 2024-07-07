@@ -37,7 +37,6 @@ const servidor = createServer((peticion,respuesta) => {
             servirFichero(respuesta,"./404.html",contentType("html"),404);
         });
     }
-
 });
 
 servidor.listen(process.env.PORT || 3000);
