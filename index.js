@@ -1,5 +1,5 @@
 const {createServer} = require("http");
-const {createReadStream} = require("fs");
+const {createReadStream,stat} = require("fs");
 
 function contentType(extension){
     if(extension == "html") return "text/html";
@@ -25,7 +25,19 @@ function servirFichero(respuesta,ruta,tipo,status){
 }
 
 const servidor = createServer((peticion,respuesta) => {
-    servirFichero(respuesta,"./publico/index.html",contentType("html"),200);
+    if(peticion.url == "/"){
+        servirFichero(respuesta,"./publico/index.html",contentType("html"),200);
+    }else{
+        let ruta = "./publico" + peticion.url;
+
+        stat(ruta, (error,info) => {
+            if(!error && info.isFile()){
+                return servirFichero(respuesta,ruta,contentType(ruta.split(".").pop()),200);
+            }
+            servirFichero(respuesta,"./404.html",contentType("html"),404);
+        });
+    }
+
 });
 
 servidor.listen(process.env.PORT || 3000);
