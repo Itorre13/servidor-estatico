@@ -25,16 +25,16 @@ function servirFichero(respuesta,ruta,tipo,status){ // creamos otra función que
 }
 
 const servidor = createServer((peticion,respuesta) => {
-    if(peticion.url == "/"){ // si la url de la peticion es igual a barrita
-        servirFichero(respuesta,"./publico/index.html",contentType("html"),200); // serviremos el fichero con la respuesta, con nuestra ruta, el content-type en html y un status 200 de que todo salió ok
+    if(peticion.url == "/"){ // si la url de la peticion es igual a barrita quiero servir el index
+        servirFichero(respuesta,"./publico/index.html",contentType("html"),200); // serviremos el index que está en nuestra ruta al index.html, el content-type en html y un status 200 de que todo salió ok
     }else{ // si no haz esto otro
-        let ruta = "./publico" + peticion.url;
+        let ruta = "./publico" + peticion.url; // creamos una variable que llamaremos ruta que será igual a nuestra carpeta conquetenada a peticion.url --> así tendremos la ruta 'completa'
 
-        stat(ruta, (error,info) => {
-            if(!error && info.isFile()){
-                return servirFichero(respuesta,ruta,contentType(ruta.split(".").pop()),200);
+        stat(ruta, (error,info) => { // stat verifica si existe y cnd acabe pasará un error o la información del fichero
+            if(!error && info.isFile()){ // si no da error y la información es un fichero haz lo siguiente --> podría ser un fichero o un directorio
+                return servirFichero(respuesta,ruta,contentType(ruta.split(".").pop()),200); // retorna servirFichero con la respuesta, la ruta y el contentType con lo que está al final de esa ruta separada por puntitos, y por último un status 200 diciendo que el fichero existe
             }
-            servirFichero(respuesta,"./404.html",contentType("html"),404);
+            servirFichero(respuesta,"./404.html",contentType("html"),404); // si no hemos entrado en ese if serviremos el fichero utilizando la respuesta, con el 404.html, el contentType será el html y el status será 404.
         });
     }
 });
