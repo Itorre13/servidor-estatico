@@ -39,4 +39,4 @@ const servidor = createServer((peticion,respuesta) => {
     }
 });
 
-servidor.listen(process.env.PORT || 3000);
+servidor.listen(process.env.PORT || 3000); // el servidor escucha en process.env.PORT es donde render guarda el puerto que el nos asigna o en el puerto 3000

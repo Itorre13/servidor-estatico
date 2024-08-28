@@ -1,5 +1,5 @@
-const h1 = document.querySelector("h1");
+const h1 = document.querySelector("h1"); // capturamos el h1
 
-h1.innerHTML = h1.innerText.split("").map(c => {
-    return `<span style="color:rgb(${[0,0,0].map(() => Math.floor(Math.random() * 256)).join(",")})">${c}</span>`
-}).join("");
+h1.innerHTML = h1.innerText.split("").map(c => { // el string que tiene el elemento h1 sera igual al texto que lleve dentro convertido en un array serarado caracter a caracter ya que no he puesto ningún separador. A partir de ese array creamos otro con .map Le llamaremos c porque sabemos que cada elemento de ese array es un caracter.
+    return `<span style="color:rgb(${[0,0,0].map(() => Math.floor(Math.random() * 256)).join(",")})">${c}</span>` // Y por cada uno de ellos retornaremos un elemento span que en el estilo tenga un color rgb dinámico, aleatorio entre 0 y 255. La información de este span será el caracter como tal ${c}
+}).join(""); // con .join lo uniremos de nuevo para que sea un string todo junto sin ningún separador.
